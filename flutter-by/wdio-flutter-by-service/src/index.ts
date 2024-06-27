@@ -59,6 +59,11 @@ declare global {
         settleBetweenScrollsTimeout?: number;
         dragDuration?: number;
       }): ChainablePromiseElement<WebdriverIO.Element | null>;
+
+      flutterDragAndDrop(options: {
+        source: WebdriverIO.Element;
+        target: WebdriverIO.Element;
+      }): Promise<void>;
     }
     interface Element {
       flutterByValueKey(value: string): Flutter.Locator;

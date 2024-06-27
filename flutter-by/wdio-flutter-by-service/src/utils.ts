@@ -1,7 +1,6 @@
 import { LocatorConfig } from './types.js';
 import { command } from 'webdriver';
 import { browser } from '@wdio/globals';
-import _ from 'lodash';
 import path from 'path';
 import { createRequire } from 'module';
 

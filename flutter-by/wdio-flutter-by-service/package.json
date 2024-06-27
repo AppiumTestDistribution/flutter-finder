@@ -1,6 +1,6 @@
 {
   "name": "wdio-flutter-by-service",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "",
   "scripts": {
     "build": "rimraf build && tsc -b"
@@ -23,10 +23,13 @@
     "@wdio/logger": "^8.38.0",
     "@wdio/utils": "^8.38.0",
     "lodash": "^4.17.21",
-    "webdriverio": "^8.38.0"
+    "webdriverio": "^8.38.0",
+    "@wdio/globals": "^8.38.0"
   },
   "devDependencies": {
     "@wdio/types": "^8.37.0",
-    "rimraf": "^5.0.7"
+    "rimraf": "^5.0.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }

@@ -18,7 +18,7 @@
     "strictFunctionTypes": false,
     "experimentalDecorators": true,
     "lib": ["es2023", "dom", "es2021"],
-    "types": ["node", "mocha"]
+    "types": ["node"]
   },
 
   "exclude": [

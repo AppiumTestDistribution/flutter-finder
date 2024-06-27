@@ -65,3 +65,10 @@ export async function flutterScrollTillVisible(
   ]);
   return await w3cElementToWdioElement(this, response);
 }
+
+export async function flutterDragAndDrop(this: WebdriverIO.Browser, options: {
+    source: WebdriverIO.Element;
+    target: WebdriverIO.Element;
+    }) {
+    return await browser.executeScript('flutter: dragAndDrop', [options]);
+}
