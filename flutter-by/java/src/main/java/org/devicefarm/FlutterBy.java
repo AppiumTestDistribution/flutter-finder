@@ -91,7 +91,7 @@ public class FlutterBy {
         private final String label;
 
         public BySemanticsLabel(String label) {
-            super("semantics label", Require.argument("label", label).nonNull("Cannot find elements when the label is null."));
+            super("semantics label", Require.argument("label", label).nonNull("Cannot find elements when the semantics label is null."));
 
             if (label.isEmpty()) {
                 throw new InvalidSelectorException("label must not be blank");

@@ -1,15 +1,18 @@
 package org.devicefarm.models;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.devicefarm.FlutterBy;
 import org.openqa.selenium.WebElement;
 
-@Setter
+import java.time.Duration;
+
+@Accessors(chain = true)
 @Getter
-@Builder
+@Setter
 public class WaitForOptions {
     private WebElement element;
     private FlutterBy.FlutterLocator locator;
+    private Duration timeout;
 }

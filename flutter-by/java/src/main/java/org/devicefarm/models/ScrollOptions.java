@@ -1,31 +1,34 @@
 package org.devicefarm.models;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.devicefarm.FlutterBy;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 
-
-@Builder
+@Accessors(chain = true)
 @Getter
+@Setter
 public class ScrollOptions {
-    WebElement finder;
+    FlutterBy.FlutterLocator finder;
     WebElement scrollView;
     ScrollDirection scrollDirection;
     Integer delta;
     Integer maxScrolls;
     Integer settleBetweenScrollsTimeout;
-    Integer dragDuration;
+    Duration dragDuration;
 
-    private static ScrollOptionsBuilder builder() {
-        return new ScrollOptionsBuilder();
+    private ScrollOptions() {
     }
 
-    public static ScrollOptionsBuilder builder(WebElement finder, ScrollDirection direction) {
-        return builder().finder(finder).scrollDirection(direction);
+    public ScrollOptions(FlutterBy.FlutterLocator finder, ScrollDirection scrollDirection) {
+        this.finder = finder;
+        this.scrollDirection = scrollDirection;
     }
 
-
+    @Getter
     public static enum ScrollDirection {
         UP("up"),
         RIGHT("right"),
@@ -36,10 +39,6 @@ public class ScrollOptions {
 
         ScrollDirection(String direction) {
             this.direction = direction;
-        }
-
-        public String getDirection() {
-            return this.direction;
         }
     }
 }
