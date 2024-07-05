@@ -9,7 +9,6 @@ lerna-debug.log*
 flutter-by/wdio-flutter-by-service/node_modules
 flutter-by/wdio-flutter-by-service/build
 .idea
-flutter-by/java/.gradle
 flutter-by/.DS_Store
 .DS_Store
 # Diagnostic reports (https://nodejs.org/api/report.html)
