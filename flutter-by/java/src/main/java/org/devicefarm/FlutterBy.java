@@ -13,24 +13,24 @@ import java.util.Map;
 
 public class FlutterBy {
 
-    public static By text(String text) {
+    public static FlutterLocator text(String text) {
         return new ByText(text);
     }
 
-    public static By type(String type) {
+    public static FlutterLocator type(String type) {
         return new ByType(type);
     }
 
-    public static By key(String key) {
+    public static FlutterLocator key(String key) {
         return new ByKey(key);
     }
 
-    public static By semanticsLabel(String label) {
+    public static FlutterLocator semanticsLabel(String label) {
         return new BySemanticsLabel(label);
     }
 
 
-    private static class ByText extends BaseW3CLocator {
+    private static class ByText extends FlutterLocator {
         private final String text;
 
         public ByText(String text) {
@@ -49,7 +49,7 @@ public class FlutterBy {
         }
     }
 
-    private static class ByType extends BaseW3CLocator {
+    private static class ByType extends FlutterLocator {
         private final String type;
 
         public ByType(String type) {
@@ -68,7 +68,7 @@ public class FlutterBy {
         }
     }
 
-    private static class ByKey extends BaseW3CLocator {
+    private static class ByKey extends FlutterLocator {
         private final String key;
 
         public ByKey(String key) {
@@ -87,7 +87,7 @@ public class FlutterBy {
         }
     }
 
-    private static class BySemanticsLabel extends BaseW3CLocator {
+    private static class BySemanticsLabel extends FlutterLocator {
         private final String label;
 
         public BySemanticsLabel(String label) {
@@ -106,11 +106,11 @@ public class FlutterBy {
         }
     }
 
-    public static class BaseW3CLocator extends By implements By.Remotable {
+    public static class FlutterLocator extends By implements By.Remotable {
 
         private final Parameters params;
 
-        protected BaseW3CLocator(String using, String value) {
+        protected FlutterLocator(String using, String value) {
             this.params = new Parameters(using, value);
         }
 
@@ -133,8 +133,8 @@ public class FlutterBy {
 
         protected final Map<String, Object> toJson() {
             Map<String, Object> json = new HashMap<>();
-            json.put("using", params.using());
-            json.put("value", params.value());
+            json.put("strategy", params.using());
+            json.put("selector", params.value());
             return Collections.unmodifiableMap(json);
         }
     }
