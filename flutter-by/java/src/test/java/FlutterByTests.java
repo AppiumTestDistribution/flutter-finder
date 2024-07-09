@@ -1,12 +1,12 @@
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import org.devicefarm.FlutterBy;
 import org.devicefarm.FlutterCommands;
 import org.devicefarm.models.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import io.appium.java_client.android.AndroidDriver;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
@@ -17,9 +17,10 @@ import java.time.Duration;
 
 public class FlutterByTests {
     private AndroidDriver driver;
+    protected static final int PORT = 4723;
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "1234";
-
+    private static AppiumDriverLocalService service;
     public void performLogin() {
         WebElement userNameTxtField = driver.findElement(FlutterBy.key("username_text_field"));
         WebElement passWordTxtField = driver.findElement(FlutterBy.key("password_text_field"));
@@ -36,6 +37,21 @@ public class FlutterByTests {
         ScrollOptions scrollOptions = new ScrollOptions(FlutterBy.text(screenTitle), ScrollOptions.ScrollDirection.DOWN);
         WebElement element = FlutterCommands.scrollTillVisible(driver, scrollOptions);
         element.click();
+    }
+
+    @BeforeAll
+    public static void beforeClass() {
+        service = new AppiumServiceBuilder()
+                .withIPAddress("127.0.0.1")
+                .usingPort(PORT)
+                .withArgument(GeneralServerFlag.BASEPATH,"/wd/hub").build();
+        service.start();
+    }
+
+    @AfterAll public static void afterClass() {
+        if (service != null) {
+            service.stop();
+        }
     }
 
     @BeforeEach

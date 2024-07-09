@@ -1,5 +1,10 @@
 on:
-   workflow_dispatch:
+   push:
+      branches:
+         - main
+   pull_request:
+      branches:
+         - main
 
 
 name: Appium Flutter Integration Driver
@@ -54,7 +59,6 @@ jobs:
                  mkdir ${{ github.workspace }}/appium-logs
                  npm install -g wait-on
                  npm install -g appium
-                 appium server -ka 800 -pa /wd/hub > appium-logs/log1.txt &
                  appium driver install uiautomator2
                  appium driver install --source npm appium-flutter-integration-driver
                  appium driver list
