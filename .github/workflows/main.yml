@@ -124,6 +124,7 @@ jobs:
                  adb devices
                  node --version
                  mkdir ${{ github.workspace }}/appium-logs
+                 npm install
                  npm install -g wait-on
                  npm install -g appium
                  appium driver list
