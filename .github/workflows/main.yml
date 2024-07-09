@@ -45,7 +45,7 @@ jobs:
               echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
               sudo udevadm control --reload-rules
               sudo udevadm trigger --name-match=kvm
-         - name: Gradle cache
+         - name: Setup gradle
            uses: gradle/actions/setup-gradle@v3
          - name: run tests
            uses: reactivecircus/android-emulator-runner@v2
@@ -67,6 +67,7 @@ jobs:
                  appium plugin list
                  adb logcat > ${{ github.workspace }}/appium-logs/flutter.txt &
                  cd ${{ github.workspace }}/flutter-by/java
+                 ls
                  ./gradlew clean build
          #        appium server -pa=/wd/hub & wait-on http://127.0.0.1:4723/wd/hub/status &&
          - name: upload appium logs
