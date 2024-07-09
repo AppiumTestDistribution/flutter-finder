@@ -125,6 +125,7 @@ jobs:
                  node --version
                  mkdir ${{ github.workspace }}/appium-logs
                  npm install
+                 npm run build
                  npm install -g wait-on
                  npm install -g appium
                  appium driver list
