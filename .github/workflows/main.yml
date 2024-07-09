@@ -54,6 +54,7 @@ jobs:
               target: ${{ matrix.target }}
               arch: x86_64
               profile: Nexus 6
+              working-directory: ${{ github.workspace }}/flutter-by/java
               script: |
                  echo ${{ env }}
                  adb devices
@@ -66,8 +67,6 @@ jobs:
                  appium driver list
                  appium plugin list
                  adb logcat > ${{ github.workspace }}/appium-logs/flutter.txt &
-                 cd ${{ github.workspace }}/flutter-by/java
-                 ls
                  ./gradlew clean build
          #        appium server -pa=/wd/hub & wait-on http://127.0.0.1:4723/wd/hub/status &&
          - name: upload appium logs
