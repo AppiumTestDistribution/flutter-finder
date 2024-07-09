@@ -40,8 +40,8 @@ public class FlutterByTests {
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
-        UiAutomator2Options options = new UiAutomator2Options().setUdid("OB4TX8AYZPLB49LJ")
-                .setApp("/Users/sudharsanselvaraj/Documents/git/appium-flutter-server/demo-app/build/app/outputs/apk/debug/app-debug.apk")
+        UiAutomator2Options options = new UiAutomator2Options()
+                .setApp("https://github.com/AppiumTestDistribution/appium-flutter-server/releases/download/0.0.18/app-debug.apk")
                 .setAutomationName("FlutterIntegration");
 
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), options);

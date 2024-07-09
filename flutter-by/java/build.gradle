@@ -1,12 +1,19 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
 
-group 'org.devicefarm'
-version '1.0-SNAPSHOT'
+group 'com.github.saikrishna321'
+version '1.0'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -30,3 +37,61 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.github.saikrishna321'
+            artifactId = 'flutter'
+            version = '1.0'
+            from components.java
+            pom {
+
+                name = 'flutter'
+                description = 'Flutter finder for java'
+                url = 'https://devicefarm.org'
+                developers {
+                    developer {
+                        name = 'Sai Krishna'
+                        email = 'atddevs@gmail.com'
+                        url = 'https://github.com/saikrishna321'
+                        id = 'saikrishna321'
+                    }
+                }
+                licenses {
+                    license {
+                        name = 'Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/AppiumTestDistribution/flutter-finder'
+                    connection = 'scm:git:ssh://git@github.com:AppiumTestDistribution/flutter-finder.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/appium/java-client.git'
+                    tag = 'HEAD'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_TOKEN")
+            }
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/'"
+            url = releasesRepoUrl
+        }
+    }
+}
+
+signing {
+    def signingKey = System.getenv("GPG_KEY_ID");
+    def signingPassword = System.getenv("GPG_KEY_PASSPHRASE");
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
+}
+
+
