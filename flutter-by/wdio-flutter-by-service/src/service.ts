@@ -2,7 +2,7 @@ import { LocatorConfig } from './types.js';
 import { registerCustomMethod, registerLocators } from './utils.js';
 import * as methods from './methods.js';
 
-export class FlutterIntergrationDriverService {
+export class FlutterIntegrationDriverService {
   private locatorConfig: LocatorConfig[] = [
     {
       name: 'flutterByValueKey',

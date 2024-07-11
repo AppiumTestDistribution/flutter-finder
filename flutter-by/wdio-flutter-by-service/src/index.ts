@@ -1,6 +1,6 @@
-import { FlutterIntergrationDriverService } from './service.js';
+import { FlutterIntegrationDriverService } from './service.js';
 import { ChainablePromiseElement } from 'webdriverio';
-export default FlutterIntergrationDriverService;
+export default FlutterIntegrationDriverService;
 
 declare global {
   namespace WebdriverIO {
@@ -91,4 +91,4 @@ declare global {
   }
 }
 
-export { FlutterIntergrationDriverService };
+export { FlutterIntegrationDriverService };
