@@ -79,11 +79,13 @@ declare global {
   }
 
   namespace Flutter {
+    // @ts-ignore
     type Locator = {
       strategy: string;
       selector: string;
     };
 
+    // @ts-ignore
     type Point = {
       x: number;
       y: number;
