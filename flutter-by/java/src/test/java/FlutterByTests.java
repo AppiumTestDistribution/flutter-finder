@@ -1,7 +1,12 @@
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.options.XCUITestOptions;
+import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import io.opentelemetry.api.baggage.BaggageBuilder;
 import org.devicefarm.FlutterBy;
 import org.devicefarm.FlutterCommands;
 import org.devicefarm.models.*;
@@ -9,14 +14,16 @@ import org.junit.jupiter.api.*;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
 
 public class FlutterByTests {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     protected static final int PORT = 4723;
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "1234";
@@ -24,7 +31,7 @@ public class FlutterByTests {
     public void performLogin() {
         WebElement userNameTxtField = driver.findElement(FlutterBy.key("username_text_field"));
         WebElement passWordTxtField = driver.findElement(FlutterBy.key("password_text_field"));
-        WebElement loginButton = driver.findElement(FlutterBy.key("login_button"));
+        WebElement loginButton = driver.findElement(FlutterBy.key("LoginButton"));
 
         userNameTxtField.clear();
         userNameTxtField.sendKeys(USERNAME);
@@ -44,6 +51,7 @@ public class FlutterByTests {
         service = new AppiumServiceBuilder()
                 .withIPAddress("127.0.0.1")
                 .usingPort(PORT)
+                .withLogFile(new File("appium.log"))
                 .withArgument(GeneralServerFlag.BASEPATH,"/wd/hub").build();
         service.start();
     }
@@ -56,11 +64,24 @@ public class FlutterByTests {
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
-        UiAutomator2Options options = new UiAutomator2Options()
-                .setApp("https://github.com/AppiumTestDistribution/appium-flutter-server/releases/download/0.0.18/app-debug.apk")
-                .setAutomationName("FlutterIntegration");
+        if(System.getenv("Platform").equalsIgnoreCase("iOS")) {
+            XCUITestOptions options = new XCUITestOptions()
+                    .setApp(System.getenv("APP_PATH"))
+                    .setAutomationName("FlutterIntegration");
+            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+            desiredCapabilities.setCapability("platformName", "iOS");
+            desiredCapabilities.setCapability("automationName", "FlutterIntegration");
+            desiredCapabilities.setCapability("app", System.getenv("APP_PATH"));
+            desiredCapabilities.setCapability("flutterSystemPort", 31212);
 
-        driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), options);
+            driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), options);
+        } else {
+            UiAutomator2Options options = new UiAutomator2Options()
+                    .setApp(System.getenv("APP_PATH"))
+                    .setAutomationName("FlutterIntegration");
+            driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), options);
+        }
+
     }
 
 
@@ -75,7 +96,7 @@ public class FlutterByTests {
     public void doubleTapTest() {
         performLogin();
         openScreen("Double Tap");
-        WebElement doubleTap = driver.findElement(FlutterBy.semanticsLabel("double_tap_button"))
+        WebElement doubleTap = driver.findElement(FlutterBy.key("double_tap_button"))
                 .findElement(FlutterBy.text("Double Tap"));
 
         Assertions.assertEquals(doubleTap.getText(), "Double Tap");
@@ -97,8 +118,8 @@ public class FlutterByTests {
     public void waitTest() {
         performLogin();
         openScreen("Lazy Loading");
-        WebElement messageField = driver.findElement(FlutterBy.semanticsLabel("message_field"));
-        WebElement toggleButton = driver.findElement(FlutterBy.semanticsLabel("toggle_button"));
+        WebElement messageField = driver.findElement(FlutterBy.key("message_field"));
+        WebElement toggleButton = driver.findElement(FlutterBy.key("toggle_button"));
 
         WaitForOptions waitOption = new WaitForOptions()
                 .setElement(messageField)
@@ -118,7 +139,7 @@ public class FlutterByTests {
     public void longPressTest() {
         performLogin();
         openScreen("Long Press");
-        WebElement longPressButton = driver.findElement(FlutterBy.semanticsLabel("long_press_button"));
+        WebElement longPressButton = driver.findElement(FlutterBy.key("long_press_button"));
         FlutterCommands.performLongPress(driver, new LongPressOptions().setElement(longPressButton));
         Assertions.assertTrue(driver.findElement(FlutterBy.text("It was a long press")).isDisplayed());
     }
@@ -127,8 +148,8 @@ public class FlutterByTests {
     public void dragAndDropTest() {
         performLogin();
         openScreen("Drag & Drop");
-        WebElement dragElement = driver.findElement(FlutterBy.semanticsLabel("drag_me"));
-        WebElement dropElement = driver.findElement(FlutterBy.semanticsLabel("drop_zone"));
+        WebElement dragElement = driver.findElement(FlutterBy.key("drag_me"));
+        WebElement dropElement = driver.findElement(FlutterBy.key("drop_zone"));
         FlutterCommands.performDragAndDrop(driver, new DragAndDropOptions(dragElement, dropElement));
         Assertions.assertTrue(driver.findElement(FlutterBy.text("The box is dropped")).isDisplayed());
     }
