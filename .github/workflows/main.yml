@@ -61,7 +61,7 @@ jobs:
                  appium driver list
                  appium plugin list
                  adb logcat > ${{ github.workspace }}/appium-logs/flutter.txt &
-                 APP_PATH=${{ env.APP_PATH }} ./gradlew clean build
+                 Platform=android APP_PATH=${{ env.APP_PATH }} ./gradlew clean build
          #        appium server -pa=/wd/hub & wait-on http://127.0.0.1:4723/wd/hub/status &&
          - name: upload appium logs
            if: always()
