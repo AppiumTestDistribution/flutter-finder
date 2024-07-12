@@ -127,6 +127,7 @@ export const config: Options.Testrunner = {
     [
       'appium',
       {
+        command : 'appium',
         args: {
           basePath: '/wd/hub',
           port: 4723,

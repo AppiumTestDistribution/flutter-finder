@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "rimraf build && tsc -b",
-    "wdio-android": "wdio run ./android.conf.ts"
+    "wdio-android": "wdio run ./android.conf.ts",
+    "wdio-ios": "wdio run ./ios.conf.ts"
   },
   "exports": {
     ".": [
@@ -30,11 +31,10 @@
   "devDependencies": {
     "@wdio/appium-service": "^8.38.0",
     "@wdio/cli": "^8.38.0",
-    "@wdio/spec-reporter": "^8.38.0",
     "@wdio/local-runner": "^8.38.0",
     "@wdio/mocha-framework": "^8.38.0",
+    "@wdio/spec-reporter": "^8.38.0",
     "@wdio/types": "^8.37.0",
-    "appium": "^2.11.1",
     "mocha": "^10.4.0",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2",
