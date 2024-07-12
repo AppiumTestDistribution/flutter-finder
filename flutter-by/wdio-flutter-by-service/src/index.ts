@@ -1,6 +1,6 @@
-import { FlutterIntergrationDriverService } from './service.js';
+import { FlutterIntegrationDriverService } from './service.js';
 import { ChainablePromiseElement } from 'webdriverio';
-export default FlutterIntergrationDriverService;
+export default FlutterIntegrationDriverService;
 
 declare global {
   namespace WebdriverIO {
@@ -79,11 +79,13 @@ declare global {
   }
 
   namespace Flutter {
+    // @ts-ignore
     type Locator = {
       strategy: string;
       selector: string;
     };
 
+    // @ts-ignore
     type Point = {
       x: number;
       y: number;
@@ -91,4 +93,4 @@ declare global {
   }
 }
 
-export { FlutterIntergrationDriverService };
+export { FlutterIntegrationDriverService };

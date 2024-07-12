@@ -1,6 +1,6 @@
 {
   "name": "wdio-flutter-by-service",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "description": "",
   "scripts": {
     "build": "rimraf build && tsc -b",
@@ -9,8 +9,8 @@
   "exports": {
     ".": [
       {
-        "types": "./build/index.d.ts",
-        "import": "./build/index.js"
+        "types": "./build/src/index.d.ts",
+        "import": "./build/src/index.js"
       }
     ],
     "./package.json": "./package.json"
@@ -18,7 +18,7 @@
   "type": "module",
   "keywords": [],
   "author": "",
-  "types": "./build/index.d.ts",
+  "types": "./build/src/index.d.ts",
   "license": "MIT License",
   "dependencies": {
     "@wdio/globals": "^8.38.0",
