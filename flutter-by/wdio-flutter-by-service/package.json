@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "rimraf build && tsc -b",
-    "wdio-android": "wdio run ./android.conf.ts"
+    "wdio-android": "wdio run ./android.conf.ts",
+    "wdio-ios": "wdio run ./ios.conf.ts"
   },
   "exports": {
     ".": [

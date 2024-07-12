@@ -3,7 +3,7 @@ on:
 
 name: Appium Flutter Integration Driver
 jobs:
-   Java_Test:
+   Java_Test_Android:
       runs-on: ubuntu-latest
       strategy:
          matrix:
@@ -61,7 +61,7 @@ jobs:
                  appium driver list
                  appium plugin list
                  adb logcat > ${{ github.workspace }}/appium-logs/flutter.txt &
-                 ./gradlew clean build
+                 APP_PATH=${{ env.APP_PATH }} ./gradlew clean build
          #        appium server -pa=/wd/hub & wait-on http://127.0.0.1:4723/wd/hub/status &&
          - name: upload appium logs
            if: always()
@@ -69,7 +69,7 @@ jobs:
            with:
               name: appium-logs
               path: ${{ github.workspace }}/flutter-by/java/build/reports
-   WDIO_Test:
+   WDIO_Test_Android:
       runs-on: ubuntu-latest
       strategy:
          matrix:
