@@ -65,9 +65,6 @@ public class FlutterByTests {
     @BeforeEach
     public void setUp() throws MalformedURLException {
         if(System.getenv("Platform").equalsIgnoreCase("iOS")) {
-            XCUITestOptions options = new XCUITestOptions()
-                    .setApp(System.getenv("APP_PATH"))
-                    .setAutomationName("FlutterIntegration");
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             desiredCapabilities.setCapability("platformName", "iOS");
             desiredCapabilities.setCapability("udid", System.getenv("UDID"));
@@ -76,7 +73,7 @@ public class FlutterByTests {
             desiredCapabilities.setCapability("flutterSystemPort", 31212);
             desiredCapabilities.setCapability("usePreinstalledWDA", true);
 
-            driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), options);
+            driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
         } else {
             UiAutomator2Options options = new UiAutomator2Options()
                     .setApp(System.getenv("APP_PATH"))
