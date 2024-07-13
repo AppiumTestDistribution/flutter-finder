@@ -70,9 +70,11 @@ public class FlutterByTests {
                     .setAutomationName("FlutterIntegration");
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             desiredCapabilities.setCapability("platformName", "iOS");
+            desiredCapabilities.setCapability("udid", System.getenv("UDID"));
             desiredCapabilities.setCapability("automationName", "FlutterIntegration");
             desiredCapabilities.setCapability("app", System.getenv("APP_PATH"));
             desiredCapabilities.setCapability("flutterSystemPort", 31212);
+            desiredCapabilities.setCapability("usePreinstalledWDA", true);
 
             driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), options);
         } else {
