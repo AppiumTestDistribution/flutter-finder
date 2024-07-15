@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FlutterCommands {
+class FlutterCommands {
 
     private static final String FLUTTER_COMMAND_PREFIX = "flutter";
 
@@ -21,16 +21,16 @@ public class FlutterCommands {
     private static final String DRAG_AND_DROP = "dragAndDrop";
 
 
-    public static void waitForVisible(WebDriver driver, WaitForOptions option) {
+    static void waitForVisible(WebDriver driver, WaitForOptions option) {
         executeScript(driver, WAIT_FOR_VISIBLE_COMMAND, parseWaitForOption(option));
     }
 
-    public static void waitForInVisible(WebDriver driver, WaitForOptions option) {
+    static void waitForInVisible(WebDriver driver, WaitForOptions option) {
         executeScript(driver, WAIT_FOR_INVISIBLE_COMMAND, parseWaitForOption(option));
     }
 
 
-    public static WebElement scrollTillVisible(WebDriver driver, ScrollOptions option) {
+    static WebElement scrollTillVisible(WebDriver driver, ScrollOptions option) {
         Map<String, Object> args = new HashMap<>();
         args.put("finder", option.getFinder().toJson());
         args.put("scrollView", option.getScrollView());
@@ -48,7 +48,7 @@ public class FlutterCommands {
         return (WebElement) executeScript(driver, SCROLL_TILL_VISIBLE, args);
     }
 
-    public static void performDoubleClick(WebDriver driver, DoubleClickOptions option) {
+    static void performDoubleClick(WebDriver driver, DoubleClickOptions option) {
         Map<String, Object> args = new HashMap<>();
         args.put("origin", option.getElement());
         if (option.getPoint() != null) {
@@ -58,7 +58,7 @@ public class FlutterCommands {
         executeScript(driver, DOUBLE_CLICK, args);
     }
 
-    public static void performLongPress(WebDriver driver, LongPressOptions option) {
+    static void performLongPress(WebDriver driver, LongPressOptions option) {
         Map<String, Object> args = new HashMap<>();
         args.put("origin", option.getElement());
         if (option.getPoint() != null) {
@@ -67,7 +67,7 @@ public class FlutterCommands {
         executeScript(driver, LONG_PRESS, args);
     }
 
-    public static void performDragAndDrop(WebDriver driver, DragAndDropOptions option) {
+    static void performDragAndDrop(WebDriver driver, DragAndDropOptions option) {
         Map<String, Object> args = new HashMap<>();
         args.put("source", option.getSource());
         args.put("target", option.getTarget());
@@ -75,20 +75,20 @@ public class FlutterCommands {
         executeScript(driver, DRAG_AND_DROP, args);
     }
 
-    private static Object executeScript(WebDriver driver, String scriptName, Map<String, Object> args) {
+    static Object executeScript(WebDriver driver, String scriptName, Map<String, Object> args) {
         String commandName = String.format("%s: %s", FLUTTER_COMMAND_PREFIX, scriptName);
         return ((JavascriptExecutor) driver).executeScript(commandName, args);
     }
 
 
-    private static Map<String, Object> parsePoint(Point point) {
+    static Map<String, Object> parsePoint(Point point) {
         return new HashMap<>() {{
             put("x", point.x);
             put("y", point.y);
         }};
     }
 
-    private static Map<String, Object> parseWaitForOption(WaitForOptions option) {
+    static Map<String, Object> parseWaitForOption(WaitForOptions option) {
         Map<String, Object> args = new HashMap<>();
         args.put("element", option.getElement());
         if (option.getLocator() != null) {

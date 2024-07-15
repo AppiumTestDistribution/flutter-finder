@@ -2,13 +2,11 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
-import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
-import io.opentelemetry.api.baggage.BaggageBuilder;
 import org.devicefarm.FlutterBy;
-import org.devicefarm.FlutterCommands;
+import org.devicefarm.FlutterDriver;
 import org.devicefarm.models.*;
 import org.junit.jupiter.api.*;
 import io.appium.java_client.android.AndroidDriver;
@@ -24,14 +22,15 @@ import java.time.Duration;
 
 public class FlutterByTests {
     private AppiumDriver driver;
+    private FlutterDriver flutterDriver;
     protected static final int PORT = 4723;
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "1234";
     private static AppiumDriverLocalService service;
     public void performLogin() {
-        WebElement userNameTxtField = driver.findElement(FlutterBy.key("username_text_field"));
-        WebElement passWordTxtField = driver.findElement(FlutterBy.key("password_text_field"));
-        WebElement loginButton = driver.findElement(FlutterBy.key("LoginButton"));
+        WebElement userNameTxtField = flutterDriver.getDriver().findElement(FlutterBy.key("username_text_field"));
+        WebElement passWordTxtField = flutterDriver.getDriver().findElement(FlutterBy.key("password_text_field"));
+        WebElement loginButton = flutterDriver.getDriver().findElement(FlutterBy.key("LoginButton"));
 
         userNameTxtField.clear();
         userNameTxtField.sendKeys(USERNAME);
@@ -42,7 +41,7 @@ public class FlutterByTests {
 
     public void openScreen(String screenTitle) {
         ScrollOptions scrollOptions = new ScrollOptions(FlutterBy.text(screenTitle), ScrollOptions.ScrollDirection.DOWN);
-        WebElement element = FlutterCommands.scrollTillVisible(driver, scrollOptions);
+        WebElement element = flutterDriver.scrollTillVisible(scrollOptions);
         element.click();
     }
 
@@ -80,7 +79,7 @@ public class FlutterByTests {
                     .setAutomationName("FlutterIntegration");
             driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), options);
         }
-
+        flutterDriver = new FlutterDriver(driver);
     }
 
 
@@ -95,21 +94,21 @@ public class FlutterByTests {
     public void doubleTapTest() {
         performLogin();
         openScreen("Double Tap");
-        WebElement doubleTap = driver.findElement(FlutterBy.key("double_tap_button"))
+        WebElement doubleTap = flutterDriver.getDriver().findElement(FlutterBy.key("double_tap_button"))
                 .findElement(FlutterBy.text("Double Tap"));
 
         Assertions.assertEquals(doubleTap.getText(), "Double Tap");
-        FlutterCommands.performDoubleClick(driver, new DoubleClickOptions().setElement(doubleTap));
+        flutterDriver.performDoubleClick(new DoubleClickOptions().setElement(doubleTap));
 
-        WebElement successMessage = driver.findElement(FlutterBy.text("Double Tap Successful"));
+        WebElement successMessage = flutterDriver.getDriver().findElement(FlutterBy.text("Double Tap Successful"));
         Assertions.assertEquals(successMessage.getText(), "Double Tap Successful");
 
-        driver.findElement(FlutterBy.text("Ok")).click();
-        FlutterCommands.performDoubleClick(driver, new DoubleClickOptions()
+        flutterDriver.getDriver().findElement(FlutterBy.text("Ok")).click();
+        flutterDriver.performDoubleClick(new DoubleClickOptions()
                 .setElement(doubleTap)
                 .setPoint(new Point(10, 0))
         );
-        successMessage = driver.findElement(FlutterBy.text("Double Tap Successful"));
+        successMessage = flutterDriver.getDriver().findElement(FlutterBy.text("Double Tap Successful"));
         Assertions.assertEquals(successMessage.getText(), "Double Tap Successful");
     }
 
@@ -117,8 +116,8 @@ public class FlutterByTests {
     public void waitTest() {
         performLogin();
         openScreen("Lazy Loading");
-        WebElement messageField = driver.findElement(FlutterBy.key("message_field"));
-        WebElement toggleButton = driver.findElement(FlutterBy.key("toggle_button"));
+        WebElement messageField = flutterDriver.getDriver().findElement(FlutterBy.key("message_field"));
+        WebElement toggleButton = flutterDriver.getDriver().findElement(FlutterBy.key("toggle_button"));
 
         WaitForOptions waitOption = new WaitForOptions()
                 .setElement(messageField)
@@ -126,11 +125,11 @@ public class FlutterByTests {
         Assertions.assertEquals(messageField.getText(), "Hello world");
 
         toggleButton.click();
-        FlutterCommands.waitForInVisible(driver, waitOption);
-        Assertions.assertEquals(driver.findElements(FlutterBy.semanticsLabel("message_field")).size(), 0);
+        flutterDriver.waitForInVisible(waitOption);
+        Assertions.assertEquals(flutterDriver.getDriver().findElements(FlutterBy.semanticsLabel("message_field")).size(), 0);
 
         toggleButton.click();
-        FlutterCommands.waitForVisible(driver, waitOption);
+        flutterDriver.waitForVisible(waitOption);
         Assertions.assertEquals(messageField.getText(), "Hello world");
     }
 
@@ -138,18 +137,18 @@ public class FlutterByTests {
     public void longPressTest() {
         performLogin();
         openScreen("Long Press");
-        WebElement longPressButton = driver.findElement(FlutterBy.key("long_press_button"));
-        FlutterCommands.performLongPress(driver, new LongPressOptions().setElement(longPressButton));
-        Assertions.assertTrue(driver.findElement(FlutterBy.text("It was a long press")).isDisplayed());
+        WebElement longPressButton = flutterDriver.getDriver().findElement(FlutterBy.key("long_press_button"));
+        flutterDriver.performLongPress(new LongPressOptions().setElement(longPressButton));
+        Assertions.assertTrue(flutterDriver.getDriver().findElement(FlutterBy.text("It was a long press")).isDisplayed());
     }
 
     @Test
     public void dragAndDropTest() {
         performLogin();
         openScreen("Drag & Drop");
-        WebElement dragElement = driver.findElement(FlutterBy.key("drag_me"));
-        WebElement dropElement = driver.findElement(FlutterBy.key("drop_zone"));
-        FlutterCommands.performDragAndDrop(driver, new DragAndDropOptions(dragElement, dropElement));
-        Assertions.assertTrue(driver.findElement(FlutterBy.text("The box is dropped")).isDisplayed());
+        WebElement dragElement = flutterDriver.getDriver().findElement(FlutterBy.key("drag_me"));
+        WebElement dropElement = flutterDriver.getDriver().findElement(FlutterBy.key("drop_zone"));
+        flutterDriver.performDragAndDrop(new DragAndDropOptions(dragElement, dropElement));
+        Assertions.assertTrue(flutterDriver.getDriver().findElement(FlutterBy.text("The box is dropped")).isDisplayed());
     }
 }
