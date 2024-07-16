@@ -29,12 +29,12 @@ public class FlutterBy {
         return new BySemanticsLabel(label);
     }
 
-
     private static class ByText extends FlutterLocator {
         private final String text;
 
         public ByText(String text) {
-            super("-flutter text", Require.argument("Text", text).nonNull("Cannot find elements when the text is null."));
+            super("-flutter text",
+                    Require.argument("Text", text).nonNull("Cannot find elements when the text is null."));
 
             if (text.isEmpty()) {
                 throw new InvalidSelectorException("text must not be blank");
@@ -53,7 +53,8 @@ public class FlutterBy {
         private final String type;
 
         public ByType(String type) {
-            super("-flutter type", Require.argument("type", type).nonNull("Cannot find elements when the type is null."));
+            super("-flutter type",
+                    Require.argument("type", type).nonNull("Cannot find elements when the type is null."));
 
             if (type.isEmpty()) {
                 throw new InvalidSelectorException("type must not be blank");
@@ -91,7 +92,8 @@ public class FlutterBy {
         private final String label;
 
         public BySemanticsLabel(String label) {
-            super("-flutter semantics label", Require.argument("label", label).nonNull("Cannot find elements when the semantics label is null."));
+            super("-flutter semantics label",
+                    Require.argument("label", label).nonNull("Cannot find elements when the semantics label is null."));
 
             if (label.isEmpty()) {
                 throw new InvalidSelectorException("label must not be blank");
@@ -133,8 +135,8 @@ public class FlutterBy {
 
         protected final Map<String, Object> toJson() {
             Map<String, Object> json = new HashMap<>();
-            json.put("strategy", params.using());
-            json.put("selector", params.value());
+            json.put("using", params.using());
+            json.put("value", params.value());
             return Collections.unmodifiableMap(json);
         }
     }

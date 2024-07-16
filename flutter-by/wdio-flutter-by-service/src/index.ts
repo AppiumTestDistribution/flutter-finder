@@ -88,8 +88,8 @@ declare global {
   namespace Flutter {
     // @ts-ignore
     type Locator = {
-      strategy: string;
-      selector: string;
+      using: string;
+      value: string;
     };
 
     // @ts-ignore

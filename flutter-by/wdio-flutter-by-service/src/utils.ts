@@ -101,8 +101,8 @@ export function registerLocators(locatorConfig: Array<LocatorConfig>) {
       `${methodName}`,
       (value: string) => {
         return {
-          strategy: config.stategy,
-          selector: value,
+          using: config.stategy,
+          value,
         };
       },
       {
