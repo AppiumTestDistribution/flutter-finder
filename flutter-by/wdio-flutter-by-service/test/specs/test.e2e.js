@@ -66,18 +66,24 @@ describe('My Login application', () => {
    it('Wait Test', async () => {
       await performLogin();
       await openScreen('Lazy Loading');
-      const message = await browser.flutterByValueKey$('message_field');
-      expect(await message.getText()).toEqual('Hello world');
+      expect(await browser.flutterByValueKey$('message_field').getText()).toEqual('Hello world');
       await browser.flutterByValueKey$('toggle_button').click();
-      await browser.flutterWaitForAbsent({ element: message, timeout: 10 });
+      await browser
+      .flutterWaitForAbsent({ 
+         locator: await browser.flutterByValueKey('message_field'), 
+         timeout: 10 }
+      );
       expect(
          await (
             await browser.flutterByValueKey$$('message_field')
          ).length,
       ).toEqual(0);
       await browser.flutterByValueKey$('toggle_button').click();
-      await browser.flutterWaitForVisible({ element: message, timeout: 10 });
-      expect(await message.getText()).toEqual('Hello world');
+      await browser.flutterWaitForVisible({ 
+         locator: await browser.flutterByValueKey('message_field'), 
+         timeout: 10 
+      });
+      expect(await browser.flutterByValueKey$('message_field').getText()).toEqual('Hello world');
    });
 
    it('Scroll Test', async () => {
