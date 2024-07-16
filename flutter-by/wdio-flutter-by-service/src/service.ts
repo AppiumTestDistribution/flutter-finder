@@ -6,27 +6,27 @@ export class FlutterIntegrationDriverService {
   private locatorConfig: LocatorConfig[] = [
     {
       name: 'flutterByValueKey',
-      stategy: 'key',
+      stategy: '-flutter key',
     },
     {
       name: 'flutterBySemanticsLabel',
-      stategy: 'semantics label',
+      stategy: '-flutter semantics label',
     },
     {
       name: 'flutterByToolTip',
-      stategy: 'tooltip',
+      stategy: '-flutter tooltip',
     },
     {
       name: 'flutterByText',
-      stategy: 'text',
+      stategy: '-flutter text',
     },
     {
       name: 'flutterByTextContaining',
-      stategy: 'text containting',
+      stategy: '-flutter text containing',
     },
     {
       name: 'flutterByType',
-      stategy: 'type',
+      stategy: '-flutter type',
     },
   ];
   /**

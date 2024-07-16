@@ -8,6 +8,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 flutter-by/wdio-flutter-by-service/node_modules
 flutter-by/wdio-flutter-by-service/build
+flutter-by/wdio-flutter-by-service/appium-logs
 .idea
 flutter-by/.DS_Store
 .DS_Store
@@ -134,3 +135,4 @@ dist
 .pnp.*
 /flutter-by/java/build/
 /flutter-by/java/.gradle/
+.history

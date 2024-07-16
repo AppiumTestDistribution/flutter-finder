@@ -20,13 +20,14 @@
     "lib": ["es2023", "dom", "es2021"],
     "types": ["node"]
   },
-
+  "incude": ["/src/**/*.ts"],
   "exclude": [
     "node_modules",
     "**/node_modules/*",
     "__mocks__",
     "packages/**/node_modules",
     "**/*.spec.ts",
+    "**/*.conf.ts",
     "coverage",
     "examples",
     "/*.js"
