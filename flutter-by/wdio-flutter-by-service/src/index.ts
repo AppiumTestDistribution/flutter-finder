@@ -5,25 +5,25 @@ export default FlutterIntegrationDriverService;
 declare global {
   namespace WebdriverIO {
     interface Browser {
-      flutterByValueKey(value: string): Flutter.Locator;
+      flutterByValueKey(value: string): Promise<Flutter.Locator>;
       flutterByValueKey$(
         value: string,
       ): ChainablePromiseElement<WebdriverIO.Element>;
       flutterByValueKey$$(
         value: string,
       ): ChainablePromiseElement<WebdriverIO.Element[]>;
-      flutterBySemanticsLabel(label: string): Flutter.Locator;
+      flutterBySemanticsLabel(label: string): Promise<Flutter.Locator>;
       flutterBySemanticsLabel$(
         label: string,
       ): ChainablePromiseElement<WebdriverIO.Element>;
       flutterBySemanticsLabel$$(
         label: string,
       ): ChainablePromiseElement<WebdriverIO.Element[]>;
-      flutterByText(text: string): Flutter.Locator;
+      flutterByText(text: string): Promise<Flutter.Locator>;
       flutterByText$(
         text: string,
       ): ChainablePromiseElement<WebdriverIO.Element>;
-      flutterByType(text: string): Flutter.Locator;
+      flutterByType(text: string): Promise<Flutter.Locator>;
       flutterByType$(
         text: string,
       ): ChainablePromiseElement<WebdriverIO.Element>;
@@ -66,15 +66,22 @@ declare global {
       }): Promise<void>;
     }
     interface Element {
-      flutterByValueKey(value: string): Flutter.Locator;
+      flutterByValueKey(value: string): Promise<Flutter.Locator>;
       flutterByValueKey$(value: string): WebdriverIO.Element;
       flutterByValueKey$$(value: string): WebdriverIO.Element[];
-      flutterBySemanticsLabel(label: string): Flutter.Locator;
+      flutterBySemanticsLabel(label: string): Promise<Flutter.Locator>;
       flutterBySemanticsLabel$(label: string): WebdriverIO.Element;
       flutterBySemanticsLabel$$(label: string): WebdriverIO.Element[];
-      flutterByText(text: string): Flutter.Locator;
+      flutterByText(text: string): Promise<Flutter.Locator>;
       flutterByText$(text: string): WebdriverIO.Element;
       flutterByText$$(text: string): WebdriverIO.Element[];
+      flutterByType(text: string): Promise<Flutter.Locator>;
+      flutterByType$(
+        text: string,
+      ): ChainablePromiseElement<WebdriverIO.Element>;
+      flutterByType$$(
+        text: string,
+      ): ChainablePromiseElement<WebdriverIO.Element[]>;
     }
   }
 

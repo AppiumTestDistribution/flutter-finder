@@ -120,7 +120,7 @@ public class FlutterByTests {
         WebElement toggleButton = flutterDriver.getDriver().findElement(FlutterBy.key("toggle_button"));
 
         WaitForOptions waitOption = new WaitForOptions()
-                .setElement(messageField)
+                .setLocator(FlutterBy.key("message_field").toJson())
                 .setTimeout(Duration.ofSeconds(10));
         Assertions.assertEquals(messageField.getText(), "Hello world");
 
@@ -130,7 +130,7 @@ public class FlutterByTests {
 
         toggleButton.click();
         flutterDriver.waitForVisible(waitOption);
-        Assertions.assertEquals(messageField.getText(), "Hello world");
+        Assertions.assertEquals(flutterDriver.getDriver().findElement(FlutterBy.key("message_field")), "Hello world");
     }
 
     @Test
