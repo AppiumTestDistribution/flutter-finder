@@ -120,7 +120,7 @@ public class FlutterByTests {
         WebElement toggleButton = flutterDriver.getDriver().findElement(FlutterBy.key("toggle_button"));
 
         WaitForOptions waitOption = new WaitForOptions()
-                .setLocator(FlutterBy.key("message_field").toJson())
+                .setLocator(FlutterBy.key("message_field"))
                 .setTimeout(Duration.ofSeconds(10));
         Assertions.assertEquals(messageField.getText(), "Hello world");
 

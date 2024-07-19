@@ -133,7 +133,7 @@ public class FlutterBy {
             return params;
         }
 
-        protected final Map<String, Object> toJson() {
+        public final Map<String, Object> toJson() {
             Map<String, Object> json = new HashMap<>();
             json.put("using", params.using());
             json.put("value", params.value());
