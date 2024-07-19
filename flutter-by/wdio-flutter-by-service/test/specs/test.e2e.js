@@ -20,6 +20,14 @@ async function openScreen(screenTitle) {
    await screenListElement.click();
 }
 
+function itForAndroidOnly(description, fn) {
+   if (browser.isIOS) {
+      it.skip(description, fn);
+   } else {
+      it(description, fn);
+   }
+}
+
 describe('My Login application', () => {
    afterEach(async () => {
       const appID = browser.isIOS
@@ -40,7 +48,7 @@ describe('My Login application', () => {
       }
    });
 
-   it('Inject Image', async() => {
+   itForAndroidOnly('Inject Image', async() => {
       const firstImageToMock = path.resolve('test/qr.png');
       const secondImageToMock = path.resolve('test/SecondImage.png');
       await performLogin();
