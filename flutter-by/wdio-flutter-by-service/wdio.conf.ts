@@ -121,7 +121,6 @@ export const config: Options.Testrunner = {
     [`${join(
         process.cwd(),
         'build',
-        'src',
         'index.js',
     )}`, {}],
     [
