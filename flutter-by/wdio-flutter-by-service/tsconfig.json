@@ -30,6 +30,7 @@
     "**/*.conf.ts",
     "coverage",
     "examples",
-    "/*.js"
+    "/*.js",
+    "test/**/*",
   ]
 }

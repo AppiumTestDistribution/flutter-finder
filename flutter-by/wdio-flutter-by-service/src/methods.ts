@@ -1,5 +1,6 @@
 import { browser } from '@wdio/globals';
 import { w3cElementToWdioElement } from './utils.js';
+import * as fs from "node:fs";
 
 export type WaitForOption = {
     element?: WebdriverIO.Element;
@@ -71,4 +72,24 @@ export async function flutterDragAndDrop(this: WebdriverIO.Browser, options: {
     target: WebdriverIO.Element;
     }) {
     return await browser.executeScript('flutter: dragAndDrop', [options]);
+}
+
+export async function flutterInjectImage(this: WebdriverIO.Browser, filePath: string) {
+    const base64Image = await convertFileToBase64(filePath);
+    return await browser.executeScript('flutter: injectImage', [{ base64Image }]);
+}
+
+export async function flutterActivateInjectedImage(this: WebdriverIO.Browser, options: {
+    base64Image: String;
+}) {
+    return await browser.executeScript('flutter: activateInjectedImage', [options]);
+}
+
+async function convertFileToBase64(filePath: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, { encoding: 'base64' }, (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
 }

@@ -40,11 +40,11 @@ declare global {
       flutterDoubleClick(options: {
         element: WebdriverIO.Element;
         offset?: { x: number; y: number };
-      }): WebdriverIO.Element;
+      }): Promise<void>;
       flutterLongPress(options: {
         element: WebdriverIO.Element;
         offset?: { x: number; y: number };
-      }): WebdriverIO.Element;
+      }): Promise<void>;
       flutterWaitForAbsent(options: {
         element: WebdriverIO.Element;
         timeout?: number;
@@ -64,6 +64,10 @@ declare global {
         source: WebdriverIO.Element;
         target: WebdriverIO.Element;
       }): Promise<void>;
+      flutterInjectImage(filePath: string): Promise<String>;
+      flutterActivateInjectedImage(options: {
+        imageId: string;
+      }): Promise<string>;
     }
     interface Element {
       flutterByValueKey(value: string): Promise<Flutter.Locator>;

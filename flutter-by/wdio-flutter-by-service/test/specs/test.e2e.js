@@ -1,4 +1,5 @@
 import { browser, expect } from '@wdio/globals';
+import path from "path";
 
 async function performLogin(userName = 'admin', password = '1234') {
    await browser.takeScreenshot();
@@ -39,6 +40,25 @@ describe('My Login application', () => {
       }
    });
 
+   it('Inject Image', async() => {
+      const firstImageToMock = path.resolve('test/qr.png');
+      const secondImageToMock = path.resolve('test/SecondImage.png');
+      await performLogin();
+      await openScreen('Image Picker');
+      const firstInjectedImage = await browser.flutterInjectImage(firstImageToMock);
+      await browser.flutterByValueKey$('capture_image').click();
+      await browser.flutterByText$('PICK').click();
+      expect(await browser.flutterByText$('Success!').isDisplayed()).toBe(true);
+      await browser.flutterInjectImage(secondImageToMock);
+      await browser.flutterByValueKey$('capture_image').click();
+      await browser.flutterByText$('PICK').click();
+      expect(await browser.flutterByText$('SecondInjectedImage').isDisplayed()).toBe(true);
+      await browser.flutterActivateInjectedImage({ imageId: firstInjectedImage });
+      await browser.flutterByValueKey$('capture_image').click();
+      await browser.flutterByText$('PICK').click();
+      expect(await browser.flutterByText$('Success!').isDisplayed()).toBe(true);
+   })
+
    it('Create Session with Flutter Integration Driver', async () => {
       await performLogin();
       await openScreen('Double Tap');
@@ -69,19 +89,19 @@ describe('My Login application', () => {
       expect(await browser.flutterByValueKey$('message_field').getText()).toEqual('Hello world');
       await browser.flutterByValueKey$('toggle_button').click();
       await browser
-      .flutterWaitForAbsent({ 
-         locator: await browser.flutterByValueKey('message_field'), 
+      .flutterWaitForAbsent({
+         locator: await browser.flutterByValueKey('message_field'),
          timeout: 10 }
       );
       expect(
-         await (
-            await browser.flutterByValueKey$$('message_field')
+         (
+             await browser.flutterByValueKey$$('message_field')
          ).length,
       ).toEqual(0);
       await browser.flutterByValueKey$('toggle_button').click();
-      await browser.flutterWaitForVisible({ 
-         locator: await browser.flutterByValueKey('message_field'), 
-         timeout: 10 
+      await browser.flutterWaitForVisible({
+         locator: await browser.flutterByValueKey('message_field'),
+         timeout: 10
       });
       expect(await browser.flutterByValueKey$('message_field').getText()).toEqual('Hello world');
    });
