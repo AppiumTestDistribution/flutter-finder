@@ -130,7 +130,7 @@ public class FlutterByTests {
 
         toggleButton.click();
         flutterDriver.waitForVisible(waitOption);
-        Assertions.assertEquals(flutterDriver.getDriver().findElement(FlutterBy.key("message_field")), "Hello world");
+        Assertions.assertEquals(flutterDriver.getDriver().findElement(FlutterBy.key("message_field")).getText(), "Hello world");
     }
 
     @Test
