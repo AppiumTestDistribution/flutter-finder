@@ -130,7 +130,8 @@ export const config: Options.Testrunner = {
         args: {
           basePath: '/wd/hub',
           port: 4723,
-          log: join(process.cwd(), 'appium-logs', 'logs.txt')
+          log: join(process.cwd(), 'appium-logs', 'logs.txt'),
+          allowInsecure: 'adb_shell'
         },
       },
     ],
