@@ -48,6 +48,22 @@ describe('My Login application', () => {
       }
    });
 
+   it('GetText test', async () => {
+      const userNameField = await browser.flutterByValueKey$('username_text_field');
+      const passwordField = await browser.flutterByValueKey$('password_text_field');
+      expect(await userNameField.getText()).toEqual("admin");
+      expect(await passwordField.getText()).toEqual("1234");
+
+      await userNameField.clearValue();
+      await userNameField.addValue("admin123");
+      await passwordField.clearValue();
+      await passwordField.addValue("password123");
+
+      //TextEdit field
+      expect(await userNameField.getText()).toEqual("admin123");
+      expect(await passwordField.getText()).toEqual("password123");
+   });
+
    itForAndroidOnly('Inject Image', async() => {
       const firstImageToMock = path.resolve('test/qr.png');
       const secondImageToMock = path.resolve('test/SecondImage.png');
