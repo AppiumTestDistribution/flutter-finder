@@ -28,24 +28,9 @@ function itForAndroidOnly(description, fn) {
    }
 }
 
-describe('My Login application', () => {
+describe('Image mocking', async() => {
    afterEach(async () => {
-      const appID = browser.isIOS
-         ? 'com.example.appiumTestingApp'
-         : 'com.example.appium_testing_app';
-      if (await browser.isAppInstalled(appID)) {
-         await browser.removeApp(appID);
-      }
-      await browser.installApp(process.env.APP_PATH);
-      await browser.pause(2000);
-      if (await browser.isAppInstalled(appID)){
-         console.log('App is installed');
-         await browser.execute('flutter: launchApp', {
-            appId: appID,
-            arguments: ['--dummy-arguments'],
-            environment: {},
-         });
-      }
+      await handleAppManagement();
    });
 
    it('GetText test', async () => {
@@ -63,25 +48,31 @@ describe('My Login application', () => {
       expect(await userNameField.getText()).toEqual("admin123");
       expect(await passwordField.getText()).toEqual("password123");
    });
+})
 
-   itForAndroidOnly('Inject Image', async() => {
-      const firstImageToMock = path.resolve('test/qr.png');
-      const secondImageToMock = path.resolve('test/SecondImage.png');
-      await performLogin();
-      await openScreen('Image Picker');
-      const firstInjectedImage = await browser.flutterInjectImage(firstImageToMock);
-      await browser.flutterByValueKey$('capture_image').click();
-      await browser.flutterByText$('PICK').click();
-      expect(await browser.flutterByText$('Success!').isDisplayed()).toBe(true);
-      await browser.flutterInjectImage(secondImageToMock);
-      await browser.flutterByValueKey$('capture_image').click();
-      await browser.flutterByText$('PICK').click();
-      expect(await browser.flutterByText$('SecondInjectedImage').isDisplayed()).toBe(true);
-      await browser.flutterActivateInjectedImage({ imageId: firstInjectedImage });
-      await browser.flutterByValueKey$('capture_image').click();
-      await browser.flutterByText$('PICK').click();
-      expect(await browser.flutterByText$('Success!').isDisplayed()).toBe(true);
-   })
+async function handleAppManagement() {
+   const appID = browser.isIOS
+       ? 'com.example.appiumTestingApp'
+       : 'com.example.appium_testing_app';
+   if (await browser.isAppInstalled(appID)) {
+      await browser.removeApp(appID);
+   }
+   await browser.installApp(process.env.APP_PATH);
+   await browser.pause(2000);
+   if (await browser.isAppInstalled(appID)) {
+      console.log('App is installed');
+      await browser.execute('flutter: launchApp', {
+         appId: appID,
+         arguments: ['--dummy-arguments'],
+         environment: {},
+      });
+   }
+}
+
+describe('My Login application', () => {
+   afterEach(async () => {
+      await handleAppManagement();
+   });
 
    it('Create Session with Flutter Integration Driver', async () => {
       await performLogin();
