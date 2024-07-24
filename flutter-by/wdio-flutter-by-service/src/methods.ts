@@ -80,7 +80,7 @@ export async function flutterInjectImage(this: WebdriverIO.Browser, filePath: st
 }
 
 export async function flutterActivateInjectedImage(this: WebdriverIO.Browser, options: {
-    base64Image: String;
+    imageId: String;
 }) {
     return await browser.executeScript('flutter: activateInjectedImage', [options]);
 }
