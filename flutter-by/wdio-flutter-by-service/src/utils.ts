@@ -3,6 +3,7 @@ import { command } from 'webdriver';
 import { browser } from '@wdio/globals';
 import path from 'path';
 import { createRequire } from 'module';
+import { pathToFileURL } from 'url';
 
 const require = createRequire(import.meta.url);
 
@@ -10,9 +11,10 @@ const constructElementObject = async function () {
   const wdioPath = require.resolve('webdriverio');
   const pathToMatch = path.join('cjs', 'index.js');
   const pathToReplace = path.join('utils', 'getElementObject.js');
-  return (
-    await import(path.join(wdioPath.replace(pathToMatch, ''), pathToReplace))
-  ).getElement;
+  const targetPath = path.join(wdioPath.replace(pathToMatch, ''), pathToReplace);
+  const fileUrl = pathToFileURL(targetPath);
+
+  return (await import(fileUrl.href)).getElement;
 };
 
 const flutterElementFinder = function (
