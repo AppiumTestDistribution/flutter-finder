@@ -137,3 +137,4 @@ dist
 /flutter-by/java/bin
 /flutter-by/java/.gradle/
 .history
+.npmrc

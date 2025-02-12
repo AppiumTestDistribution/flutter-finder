@@ -8,31 +8,31 @@ declare global {
       flutterByValueKey(value: string): Promise<Flutter.Locator>;
       flutterByValueKey$(
         value: string,
-      ): ChainablePromiseElement<WebdriverIO.Element>;
+      ): ChainablePromiseElement;
       flutterByValueKey$$(
         value: string,
-      ): ChainablePromiseElement<WebdriverIO.Element[]>;
+      ): ChainablePromiseElement[];
       flutterBySemanticsLabel(label: string): Promise<Flutter.Locator>;
       flutterBySemanticsLabel$(
         label: string,
-      ): ChainablePromiseElement<WebdriverIO.Element>;
+      ): ChainablePromiseElement;
       flutterBySemanticsLabel$$(
         label: string,
-      ): ChainablePromiseElement<WebdriverIO.Element[]>;
+      ): ChainablePromiseElement[];
       flutterByText(text: string): Promise<Flutter.Locator>;
       flutterByText$(
         text: string,
-      ): ChainablePromiseElement<WebdriverIO.Element>;
+      ): ChainablePromiseElement;
       flutterByType(text: string): Promise<Flutter.Locator>;
       flutterByType$(
         text: string,
-      ): ChainablePromiseElement<WebdriverIO.Element>;
+      ): ChainablePromiseElement;
       flutterByType$$(
         text: string,
-      ): ChainablePromiseElement<WebdriverIO.Element[]>;
+      ): ChainablePromiseElement[];
       flutterByText$$(
         text: string,
-      ): ChainablePromiseElement<WebdriverIO.Element[]>;
+      ): ChainablePromiseElement[];
       flutterWaitForVisible(options: {
         element: WebdriverIO.Element;
         timeout?: number;
@@ -58,7 +58,7 @@ declare global {
         maxScrolls?: number;
         settleBetweenScrollsTimeout?: number;
         dragDuration?: number;
-      }): ChainablePromiseElement<WebdriverIO.Element | null>;
+      }): ChainablePromiseElement | null;
 
       flutterDragAndDrop(options: {
         source: WebdriverIO.Element;
@@ -82,10 +82,10 @@ declare global {
       flutterByType(text: string): Promise<Flutter.Locator>;
       flutterByType$(
         text: string,
-      ): ChainablePromiseElement<WebdriverIO.Element>;
+      ): ChainablePromiseElement;
       flutterByType$$(
         text: string,
-      ): ChainablePromiseElement<WebdriverIO.Element[]>;
+      ): ChainablePromiseElement[];
     }
   }
 

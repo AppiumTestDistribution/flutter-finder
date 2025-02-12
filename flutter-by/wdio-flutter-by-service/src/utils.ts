@@ -4,17 +4,33 @@ import { browser } from '@wdio/globals';
 import path from 'path';
 import { createRequire } from 'module';
 import { pathToFileURL } from 'url';
+import fs from 'fs';
 
 const require = createRequire(import.meta.url);
+let getElement: any;
 
 const constructElementObject = async function () {
-  const wdioPath = require.resolve('webdriverio');
-  const pathToMatch = path.join('cjs', 'index.js');
-  const pathToReplace = path.join('utils', 'getElementObject.js');
-  const targetPath = path.join(wdioPath.replace(pathToMatch, ''), pathToReplace);
-  const fileUrl = pathToFileURL(targetPath);
-
-  return (await import(fileUrl.href)).getElement;
+  if(!getElement) {
+    const wdioPath = require.resolve('webdriverio');
+    const targetPath = wdioPath.replace(".cjs", "js")
+    const fileUrl = targetPath.replace("indexjs", "index.js");
+  
+    let fileContent = fs.readFileSync(fileUrl, "utf8");
+    const exportRegex = /export\s*{([^}]*)}/;
+  
+    const exportBlock = fileContent.match(exportRegex);
+    if(exportBlock && !/\bgetElement\b/.test(exportBlock[1])) {
+      fileContent = fileContent.replace(exportRegex, (match, group) => {
+        return `export {${group.trim().endsWith(",") ? group.trim() : group.trim() + ","} getElement };`;
+      });
+  
+      fs.writeFileSync(fileUrl, fileContent, "utf8");
+    }
+  
+    getElement = (await import(fileUrl)).getElement;
+  }
+  
+  return getElement;
 };
 
 const flutterElementFinder = function (
