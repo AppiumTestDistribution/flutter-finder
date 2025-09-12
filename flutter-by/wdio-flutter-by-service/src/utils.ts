@@ -40,13 +40,16 @@ const flutterElementFinder = function (
 ) {
   return async function (
     this: WebdriverIO.Browser | WebdriverIO.Element,
-    selector: string,
+    selector: any,
   ) {
     const suffix = isMultipleFind ? 'elements' : 'element';
     const elementId = (this as WebdriverIO.Element)['elementId'];
     const endpoint = !elementId
       ? `/session/:sessionId/${suffix}`
       : `/session/:sessionId/element/:elementId/${suffix}`;
+    if (typeof selector !== 'string') {
+      selector = JSON.stringify(selector);
+    }
     const args = [elementId, strategy, selector].filter(Boolean);
 
     const variables = elementId
@@ -117,10 +120,10 @@ export function registerLocators(locatorConfig: Array<LocatorConfig>) {
     });
     registerCustomMethod(
       `${methodName}`,
-      (value: string) => {
+      (value: any) => {
         return {
           using: config.stategy,
-          value,
+          value: typeof value !== 'string' ? JSON.stringify(value) : value,
         };
       },
       {

@@ -1,10 +1,22 @@
 import { FlutterIntegrationDriverService } from './service.js';
-import { ChainablePromiseElement } from 'webdriverio';
+import type { ChainablePromiseElement } from 'webdriverio';
 export default FlutterIntegrationDriverService;
 
 declare global {
   namespace WebdriverIO {
     interface Browser {
+      flutterByDescendant(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): Promise<Flutter.Locator>;
+      flutterByDescendant$(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): ChainablePromiseElement;
+      flutterByDescendant$$(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): ChainablePromiseElement[];
       flutterByValueKey(value: string): Promise<Flutter.Locator>;
       flutterByValueKey$(
         value: string,
@@ -86,6 +98,18 @@ declare global {
       flutterByType$$(
         text: string,
       ): ChainablePromiseElement[];
+      flutterByDescendant(options: {
+       of: WebdriverIO.Element;
+       matching: WebdriverIO.Element;
+     }): Promise<Flutter.Locator>;
+     flutterByDescendant$(options: {
+       of: WebdriverIO.Element;
+       matching: WebdriverIO.Element;
+     }): ChainablePromiseElement;
+     flutterByDescendant$$(options: {
+       of: WebdriverIO.Element;
+       matching: WebdriverIO.Element;
+     }): ChainablePromiseElement[];
     }
   }
 
