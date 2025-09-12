@@ -295,4 +295,14 @@ describe('My Login application', () => {
       });
       expect(await childElement.getText()).toEqual('Child 2');
    });
+
+   it('Ancestor Test', async () => {
+      await performLogin();
+      await openScreen('Nested Widgets');
+      const parentElement = await browser.flutterByAncestor$({
+         of: await browser.flutterByText('Child 2'),
+         matching: await browser.flutterByValueKey('parent_card_4'),
+      });
+      expect(await parentElement.isDisplayed()).toBe(true);
+   });
 });

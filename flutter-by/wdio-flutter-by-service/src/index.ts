@@ -17,6 +17,18 @@ declare global {
         of: WebdriverIO.Element;
         matching: WebdriverIO.Element;
       }): ChainablePromiseElement[];
+      flutterByAncestor(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): Promise<Flutter.Locator>;
+      flutterByAncestor$(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): ChainablePromiseElement;
+      flutterByAncestor$$(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): ChainablePromiseElement[];
       flutterByValueKey(value: string): Promise<Flutter.Locator>;
       flutterByValueKey$(
         value: string,
@@ -110,6 +122,18 @@ declare global {
        of: WebdriverIO.Element;
        matching: WebdriverIO.Element;
      }): ChainablePromiseElement[];
+      flutterByAncestor(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): Promise<Flutter.Locator>;
+      flutterByAncestor$(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): ChainablePromiseElement;
+      flutterByAncestor$$(options: {
+        of: WebdriverIO.Element;
+        matching: WebdriverIO.Element;
+      }): ChainablePromiseElement[];
     }
   }
 

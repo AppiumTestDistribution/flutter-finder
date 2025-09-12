@@ -32,6 +32,10 @@ export class FlutterIntegrationDriverService {
       name: 'flutterByDescendant',
       stategy: '-flutter descendant',
     },
+    {
+      name: 'flutterByAncestor',
+      stategy: '-flutter ancestor',
+    },
   ];
   /**
    * this browser object is passed in here for the first time
