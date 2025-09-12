@@ -28,6 +28,14 @@ export class FlutterIntegrationDriverService {
       name: 'flutterByType',
       stategy: '-flutter type',
     },
+    {
+      name: 'flutterByDescendant',
+      stategy: '-flutter descendant',
+    },
+    {
+      name: 'flutterByAncestor',
+      stategy: '-flutter ancestor',
+    },
   ];
   /**
    * this browser object is passed in here for the first time

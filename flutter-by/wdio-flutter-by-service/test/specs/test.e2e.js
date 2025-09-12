@@ -285,4 +285,24 @@ describe('My Login application', () => {
          .getText();
       expect(dropped).toEqual('The box is dropped');
    });
+
+   it('Descendant Test', async () => {
+      await performLogin();
+      await openScreen('Nested Scroll');
+      const childElement = await browser.flutterByDescendant$({
+         of: await browser.flutterByValueKey('parent_card_1'),
+         matching: await browser.flutterByText('Child 2'),
+      });
+      expect(await childElement.getText()).toEqual('Child 2');
+   });
+
+   it('Ancestor Test', async () => {
+      await performLogin();
+      await openScreen('Nested Widgets');
+      const parentElement = await browser.flutterByAncestor$({
+         of: await browser.flutterByText('Child 2'),
+         matching: await browser.flutterByValueKey('parent_card_4'),
+      });
+      expect(await parentElement.isDisplayed()).toBe(true);
+   });
 });
